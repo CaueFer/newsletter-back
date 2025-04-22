@@ -7,7 +7,7 @@ const fastify = Fastify({
   logger: true,
 });
 
-fastify.register(routes);
+fastify.register(routes, { prefix: "/api/v1" });
 fastify.register(pg, {
   connectionString: "postgres://postgres@localhost/postgres",
 });
@@ -18,7 +18,7 @@ const start = async () => {
   try {
     // CONECTAR NO REDIS
 
-    await fastify.listen({ port: 5000 }, () => {
+    fastify.listen({ port: 5000 }, () => {
       console.log(`Server running on port 5000`);
     });
   } catch (e) {

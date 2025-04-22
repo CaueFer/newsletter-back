@@ -9,8 +9,8 @@ async function routes(fastify: FastifyInstance, options: FastifyPluginOptions) {
     reply.status(200).send({ message: "pong" });
   });
 
-  fastify.register(subscriptionRoutes);
-  fastify.register(contentRoutes);
-  fastify.register(mailerRoutes);
+  fastify.register(subscriptionRoutes, { prefix: "/subscription" });
+  fastify.register(contentRoutes, { prefix: "/content" });
+  fastify.register(mailerRoutes, { prefix: "/mailer" });
 }
 export default routes;
