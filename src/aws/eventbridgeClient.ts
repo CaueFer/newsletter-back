@@ -1,6 +1,9 @@
-import AWS from "aws-sdk";
+import { EventBridgeClient } from "@aws-sdk/client-eventbridge";
+import { fromEnv } from "@aws-sdk/credential-provider-env";
 
-AWS.config.update({ region: process.env.AWS_REGION });
+const eventBridgeClient = new EventBridgeClient({
+  region: process.env.AWS_REGION,
+  credentials: fromEnv(),
+});
 
-const eventBridgeClient = new AWS.EventBridge();
 export default eventBridgeClient;

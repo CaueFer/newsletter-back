@@ -8,7 +8,7 @@ import {
 
 const ruleName = process.env.RULE_NAME;
 export async function mailerPause(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
@@ -25,7 +25,7 @@ export async function mailerPause(
 }
 
 export async function mailerStart(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
@@ -44,7 +44,7 @@ export async function mailerStart(
 }
 
 export async function mailerStatus(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {

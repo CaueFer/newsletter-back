@@ -9,6 +9,8 @@
     "dev": "tsx watch src/main.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-eventbridge": "^3.790.0",
+    "@aws-sdk/credential-provider-env": "^3.775.0",
     "@fastify/postgres": "^6.0.2",
     "aws-sdk": "^2.1692.0",
     "dotenv": "^16.5.0",
