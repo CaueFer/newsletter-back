@@ -12,12 +12,9 @@ export async function mailerPause(
   reply: FastifyReply
 ) {
   try {
-    const success = await mailerPauseService(ruleName);
+    const { status, response } = await mailerPauseService(ruleName);
 
-    if (success)
-      reply.status(200).send({ message: `Cron pausado em: ${Date.now()}` });
-
-    reply.status(204).send({ message: "Cron não encontrado" });
+    reply.status(status).send(response);
   } catch (e) {
     console.error(e);
     reply.status(500);
@@ -29,14 +26,9 @@ export async function mailerStart(
   reply: FastifyReply
 ) {
   try {
-    const success = await mailerStartService(ruleName);
+    const { status, response } = await mailerStartService(ruleName);
 
-    if (success)
-      reply
-        .status(200)
-        .send({ message: `Cron inicializado em: ${Date.now()}` });
-
-    reply.status(204).send({ message: "Cron não encontrado" });
+    reply.status(status).send(response);
   } catch (e) {
     console.error(e);
     reply.status(500);
@@ -48,12 +40,9 @@ export async function mailerStatus(
   reply: FastifyReply
 ) {
   try {
-    const { success, status } = await mailerStatusService(ruleName);
+    const { status, response } = await mailerStatusService(ruleName);
 
-    if (success && status)
-      reply.status(200).send({ message: `Status do cron: ${status}`, status });
-
-    reply.status(204).send({ message: "Cron não encontrado" });
+    reply.status(status).send(response);
   } catch (e) {
     console.error(e);
     reply.status(500);

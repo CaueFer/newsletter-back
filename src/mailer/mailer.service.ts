@@ -8,39 +8,60 @@ import eventBridgeClient from "../aws/eventbridgeClient.js";
 
 export async function mailerStartService(
   ruleName: string | undefined
-): Promise<boolean> {
+): Promise<{ status: number; response: { message: string } }> {
   if (ruleName?.trim() != "" && ruleName != null) {
     const command = new EnableRuleCommand({ Name: ruleName });
 
     await eventBridgeClient.send(command);
-    return true;
+    return {
+      status: 200,
+      response: { message: `Cron inicializado em: ${Date.now()}` },
+    };
   }
 
-  return false;
+  return {
+    status: 204,
+    response: { message: "Cron não encontrado" },
+  };
 }
 
 export async function mailerPauseService(
   ruleName: string | undefined
-): Promise<boolean> {
+): Promise<{
+  status: number;
+  response: { message: string };
+}> {
   if (ruleName?.trim() != "" && ruleName != null) {
     const command = new DisableRuleCommand({ Name: ruleName });
     await eventBridgeClient.send(command);
-    return true;
+    return {
+      status: 200,
+      response: { message: `Cron pausado em: ${Date.now()}` },
+    };
   }
 
-  return false;
+  return {
+    status: 204,
+    response: { message: "Cron não encontrado!" },
+  };
 }
 
 export async function mailerStatusService(
   ruleName: string | undefined
-): Promise<{ success: boolean; status?: string }> {
+): Promise<{
+  status: number;
+  response: { cronStatus?: string; message?: string };
+}> {
   if (ruleName?.trim() != "" && ruleName != null) {
     const command = new DescribeRuleCommand({ Name: ruleName });
 
     const statusCron = await eventBridgeClient.send(command);
 
-    return { success: true, status: statusCron.State };
+    return {
+      status: 200,
+      response: { cronStatus: statusCron.State },
+    };
   }
 
-  return { success: false };
+  return { status: 204, response: { message: "Cron não encontrado" } };
 }
