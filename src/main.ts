@@ -9,7 +9,10 @@ const fastify = Fastify({
 
 fastify.register(routes, { prefix: "/api/v1" });
 fastify.register(pg, {
-  connectionString: "postgres://postgres@localhost/postgres",
+  host: "localhost",
+  user: "postgres",
+  password: "123456",
+  database: "newsletter",
 });
 
 export default fastify;

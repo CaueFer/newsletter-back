@@ -1,0 +1,16 @@
+
+
+services:
+    newsletter_db:
+      image: postgres:17
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: 123456
+        POSTGRES_DB: newsletter
+      ports:
+        - "5432:5432"
+      volumes:
+        - newsletter_data:/var/lib/postgresql/data
+
+volumes:
+  newsletter_data:
