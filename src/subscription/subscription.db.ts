@@ -21,7 +21,6 @@ export async function unsubscriptionDb(email: string): Promise<QueryResult> {
     `
         UPDATE reader
         SET 
-            subscribed_at = null,
             unsubscribed_at = NOW()
         WHERE
             email = $1
