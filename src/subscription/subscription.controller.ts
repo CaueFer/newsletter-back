@@ -12,13 +12,12 @@ export async function subscription(
   try {
     const { email } = request.params as { email: string };
 
-    const id = await subscriptionService(email);
+    const { status, response } = await subscriptionService(email);
 
-    if (id != null) return reply.status(200);
-
-    return reply.callNotFound();
+    return reply.status(status).send(response);
   } catch (e) {
     console.error(e);
+    return reply.status(500);
   }
 }
 
@@ -29,11 +28,9 @@ export async function unsubscription(
   try {
     const { email } = request.params as { email: string };
 
-    const id = await unsubscriptionService(email);
+    const { status, response } = await unsubscriptionService(email);
 
-    if (id != null) return reply.status(200);
-
-    return reply.callNotFound();
+    return reply.status(status).send(response);
   } catch (e) {
     console.error(e);
     return reply.status(500);

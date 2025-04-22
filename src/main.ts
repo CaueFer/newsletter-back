@@ -1,4 +1,4 @@
-import Fastify from "fastify";
+import Fastify, { errorCodes } from "fastify";
 import pg from "@fastify/postgres";
 
 import routes from "./routes.js";
@@ -10,6 +10,7 @@ const fastify = Fastify({
 fastify.register(routes, { prefix: "/api/v1" });
 fastify.register(pg, {
   host: "localhost",
+  port: 5432,
   user: "postgres",
   password: "123456",
   database: "newsletter",

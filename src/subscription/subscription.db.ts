@@ -5,9 +5,9 @@ import fastify from "../main.js";
 export async function subscriptionDb(email: string): Promise<QueryResult> {
   const query = await fastify.pg.query(
     `
-        INSERT INTO readers (email, subscribed_at)
+        INSERT INTO reader (email, subscribed_at)
         VALUES ($1, NOW())
-        ON CONFLICT (email) DO NOTHING
+        ON CONFLICT (email) do nothing
         RETURNING id
     `,
     [email]
@@ -19,7 +19,7 @@ export async function subscriptionDb(email: string): Promise<QueryResult> {
 export async function unsubscriptionDb(email: string): Promise<QueryResult> {
   const query = await fastify.pg.query(
     `
-        UPDATE readers
+        UPDATE reader
         SET 
             subscribed_at = null,
             unsubscribed_at = NOW()
