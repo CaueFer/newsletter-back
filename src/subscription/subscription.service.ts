@@ -12,7 +12,7 @@ export async function subscriptionService(
       response: { message: "Subscription added successfully!" },
     };
 
-  return { status: 204, response: { message: "Email already exists!" } };
+  return { status: 409, response: { message: "Email already exists!" } };
 }
 
 export async function unsubscriptionService(
@@ -27,5 +27,5 @@ export async function unsubscriptionService(
       response: { message: "Subscription removed successfully!" },
     };
 
-  return { status: 204, response: { message: "Email not found!" } };
+  return { status: 404, response: { message: "Email not found!" } };
 }
