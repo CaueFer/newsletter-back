@@ -6,7 +6,7 @@ const eventBridgeClient = new EventBridgeClient({
   credentials: fromEnv(),
 });
 
-// ADICIONE ESSAS CONFIGURACAO NO .ENV
+// CONFIGURACAO DO .ENV
 // AWS_ACCESS_KEY_ID
 // AWS_SECRET_ACCESS_KEY
 // AWS_REGION
