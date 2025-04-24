@@ -6,6 +6,7 @@ import cors from "@fastify/cors";
 import pg from "@fastify/postgres";
 
 import routes from "./routes.js";
+import { dbConnection } from "./db/db.config.js";
 
 const fastify = Fastify({
   logger: true,
@@ -17,15 +18,7 @@ await fastify.register(cors, {
   methods: ["GET", "POST", "PUT", "DELETE"],
 });
 await fastify.register(routes, { prefix: "/api/v1" });
-await fastify.register(pg, {
-  host: "localhost",
-  port: 5432,
-  user: "postgres",
-  password: "123456",
-  database: "newsletter",
-});
-
-export default fastify;
+await fastify.register(pg, dbConnection);
 
 const start = async () => {
   try {
@@ -41,3 +34,5 @@ const start = async () => {
 };
 
 start();
+
+export default fastify;
