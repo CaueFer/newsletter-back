@@ -29,8 +29,9 @@ export async function signupDb(
 ): Promise<QueryResult<{ id: number }>> {
   const query = await fastify.pg.query(
     `
-    insert into user (nome, email, password)
-    values ($1, $2, $3)
+    INSERT INTO "user" (name, email, password)
+    VALUES ($1, $2, $3)
+    returning id
     `,
     [name, email, password]
   );

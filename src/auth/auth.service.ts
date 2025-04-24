@@ -1,15 +1,15 @@
 import jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
-
-import { loginDb, signupDb } from "./auth.db.js";
 import { String } from "aws-sdk/clients/appstream.js";
 
-const JWT_SECRET = process.env.JWT_SECRET;
+import { loginDb, signupDb } from "./auth.db.js";
+import { getJwtSecret } from "../lib/helpers.js";
 
 async function tokenSign(payload: Record<string, unknown>): Promise<String> {
-  if (JWT_SECRET == null) throw new Error("jwt secret undefined");
+  const jwtSecret = getJwtSecret();
+  if (jwtSecret == null) throw new Error("jwt secret undefined");
 
-  return jwt.sign(payload, JWT_SECRET as string, {
+  return jwt.sign(payload, jwtSecret, {
     expiresIn: "24h",
   });
 }
@@ -23,8 +23,6 @@ export async function loginService(
 }> {
   if (!email || !password)
     return { status: 200, response: { message: "Email ou senha inválidos." } };
-
-  if (JWT_SECRET == null) throw new Error("jwt secret undefined");
 
   const query = await loginDb(email);
   const user = query?.rows[0];
@@ -66,8 +64,6 @@ export async function signupService(
       status: 200,
       response: { message: "Nome, email e senha inválidos!" },
     };
-
-  if (JWT_SECRET == null) throw new Error("jwt secret undefined");
 
   const hashPassword = bcrypt.hashSync(password, 13);
   const newUser = await signupDb(name, email, hashPassword);

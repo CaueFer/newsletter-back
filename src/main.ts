@@ -1,4 +1,8 @@
-import Fastify, { errorCodes } from "fastify";
+import dotenv from "dotenv";
+dotenv.config();
+
+import Fastify from "fastify";
+import cors from "@fastify/cors";
 import pg from "@fastify/postgres";
 
 import routes from "./routes.js";
@@ -7,8 +11,13 @@ const fastify = Fastify({
   logger: true,
 });
 
-fastify.register(routes, { prefix: "/api/v1" });
-fastify.register(pg, {
+// CONFIGS DO FASTIFY
+await fastify.register(cors, {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+});
+await fastify.register(routes, { prefix: "/api/v1" });
+await fastify.register(pg, {
   host: "localhost",
   port: 5432,
   user: "postgres",
