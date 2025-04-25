@@ -7,15 +7,15 @@ export async function loginDb(
 ): Promise<QueryResult<{ id: number; nome: string; password: string }>> {
   const query = fastify.pg.query(
     `
-        select
-            id,
-            nome,
-            password
-        from 
-            user
-        where 
-            email = $1
-        `,
+    select
+      u.id,
+      u.name,
+      u.password
+    from 
+        "user" u
+    where 
+        u.email = $1
+    `,
     [email]
   );
 
