@@ -33,11 +33,11 @@ export async function loginService(
       response: { message: "Email não associado a nenhuma conta." },
     };
 
-  const { id, nome, password: passwordDb } = user;
+  const { id, name, password: passwordDb, role } = user;
 
   // VERIFICA SENHA
   if (bcrypt.compareSync(password, passwordDb)) {
-    const token = await tokenSign({ id, nome, email });
+    const token = await tokenSign({ id, name, email, role });
 
     return {
       status: 202,
@@ -76,9 +76,9 @@ export async function signupService(
       },
     };
 
-  const { id } = newUser.rows[0];
+  const { id, role } = newUser.rows[0];
 
-  const token = await tokenSign({ id, name, email });
+  const token = await tokenSign({ id, name, email, role });
 
   return {
     status: 201,
