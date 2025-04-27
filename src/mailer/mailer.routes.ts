@@ -15,7 +15,6 @@ export default async function mailerRoutes(
       schema: {
         tags: ["mailer"],
         description: "Re-start eventBridge schedule",
-        body: null,
         response: {
           200: z.object({
             message: z.string(),
@@ -35,7 +34,6 @@ export default async function mailerRoutes(
       schema: {
         tags: ["mailer"],
         description: "Pause eventBridge schedule",
-        body: null,
         response: {
           200: z.object({
             message: z.string(),
@@ -55,7 +53,6 @@ export default async function mailerRoutes(
       schema: {
         tags: ["mailer"],
         description: "Return actual status of an eventBridge schedule",
-        body: null,
         response: {
           200: z.object({
             message: z.string(),

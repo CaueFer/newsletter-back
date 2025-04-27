@@ -3,12 +3,15 @@ dotenv.config();
 
 import { fastify } from "fastify";
 import cors from "@fastify/cors";
-import pg from "@fastify/postgres";
 import {
   validatorCompiler,
   serializerCompiler,
   ZodTypeProvider,
+  jsonSchemaTransform,
 } from "fastify-type-provider-zod";
+import pg from "@fastify/postgres";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
 
 import routes from "./routes.js";
 import { dbConnection } from "./db/db.config.js";
@@ -22,6 +25,21 @@ const app = fastify({
 app.setValidatorCompiler(validatorCompiler);
 // OUTPUT
 app.setSerializerCompiler(serializerCompiler);
+
+// ==== CONFIG SWAGGER
+await app.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: "Newsletter API",
+      version: "1.0.0",
+    },
+  },
+  transform: jsonSchemaTransform,
+});
+
+await app.register(fastifySwaggerUi, {
+  routePrefix: "/api/docs",
+});
 
 // ===== CONFIGS DO FASTIFY
 await app.register(cors, {
