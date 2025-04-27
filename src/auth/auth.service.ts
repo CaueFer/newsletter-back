@@ -22,7 +22,7 @@ export async function loginService(
   response: { message: string; authToken?: string };
 }> {
   if (!email || !password)
-    return { status: 200, response: { message: "Email ou senha inválidos." } };
+    return { status: 401, response: { message: "Email ou senha inválidos." } };
 
   const query = await loginDb(email);
   const user = query?.rows[0];
@@ -61,7 +61,7 @@ export async function signupService(
 }> {
   if (!name || !email || !password)
     return {
-      status: 200,
+      status: 401 ,
       response: { message: "Nome, email e senha inválidos!" },
     };
 

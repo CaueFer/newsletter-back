@@ -1,38 +1,49 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import Fastify from "fastify";
+import { fastify } from "fastify";
 import cors from "@fastify/cors";
 import pg from "@fastify/postgres";
+import {
+  validatorCompiler,
+  serializerCompiler,
+  ZodTypeProvider,
+} from "fastify-type-provider-zod";
 
 import routes from "./routes.js";
 import { dbConnection } from "./db/db.config.js";
 
-const fastify = Fastify({
+const app = fastify({
   logger: true,
-});
+}).withTypeProvider<ZodTypeProvider>();
 
-// CONFIGS DO FASTIFY
-await fastify.register(cors, {
+// ===== VALIDACAO DE DADOS
+// INPUT
+app.setValidatorCompiler(validatorCompiler);
+// OUTPUT
+app.setSerializerCompiler(serializerCompiler);
+
+// ===== CONFIGS DO FASTIFY
+await app.register(cors, {
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
 });
-await fastify.register(routes, { prefix: "/api/v1" });
-await fastify.register(pg, dbConnection);
+await app.register(pg, dbConnection);
+await app.register(routes, { prefix: "/api/v1" });
 
 const start = async () => {
   try {
     // CONECTAR NO REDIS
 
-    fastify.listen({ port: 5000 }, () => {
+    app.listen({ port: 5000 }, () => {
       console.log(`Server running on port 5000`);
     });
   } catch (e) {
-    fastify.log.error(e);
+    app.log.error(e);
     process.exit(1);
   }
 };
 
 start();
 
-export default fastify;
+export default app;
