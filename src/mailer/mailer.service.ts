@@ -4,7 +4,7 @@ import {
   EnableRuleCommand,
 } from "@aws-sdk/client-eventbridge";
 
-import eventBridgeClient from "../aws/eventbridgeClient.js";
+import eventBridgeClient from "../config/aws/eventbridgeClient.js";
 
 export async function mailerStartService(
   ruleName: string | undefined

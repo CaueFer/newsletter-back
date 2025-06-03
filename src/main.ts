@@ -13,7 +13,7 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 
 import routes from "./routes.js";
-import { dbConnection } from "./db/db.config.js";
+import { dbConnection } from "./config/db/db.config.js";
 
 const app = fastify({
   logger: true,
