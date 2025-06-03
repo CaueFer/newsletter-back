@@ -1,0 +1,13 @@
+Tasks:
+    Tip:
+        * Press Cmd+Enter (Ctrl+Enter on Windows and Linux) to add a new task
+
+    ✔ Instalar o LocalStack @done (6/3/2025, 11:25:52 AM)
+    ✔ Criar Queue @done (6/3/2025, 12:52:50 PM)
+    ✔ Criar o Schedular @done (6/3/2025, 12:52:50 PM)
+    
+
+
+Actions:
+    * Complete a task by pressing Alt+d @done
+    * Cancel a task by pressing Alt+c @cancelled
