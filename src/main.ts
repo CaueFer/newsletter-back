@@ -1,5 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
 import { fastify } from "fastify";
 import cors from "@fastify/cors";
@@ -21,9 +20,7 @@ const app = fastify({
 }).withTypeProvider<ZodTypeProvider>();
 
 // ===== VALIDACAO DE DADOS
-// INPUT
 app.setValidatorCompiler(validatorCompiler);
-// OUTPUT
 app.setSerializerCompiler(serializerCompiler);
 
 // ==== CONFIG SWAGGER
@@ -46,7 +43,11 @@ await app.register(cors, {
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
 });
+
+// ===== Postgres
 await app.register(pg, dbConnection);
+
+// ===== Router
 await app.register(routes, { prefix: "/api/v1" });
 
 const start = async () => {

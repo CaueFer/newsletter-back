@@ -1,8 +1,8 @@
 export const dbConnection = {
   // TROCAR PARA DADOS REAIS E POR NO ENV
-  host: "localhost",
-  port: 5432,
-  user: "postgres",
-  password: "123456",
-  database: "newsletter",
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 };
